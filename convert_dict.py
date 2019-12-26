@@ -1,5 +1,5 @@
 # This script creates a dictionary that maps traditional words to EBEO ones.
-# The output is called 'trad_to-ebeo.txt'.
+# The output is called 'trad_to_ebeo.txt'.
 
 # Map CMUdict notation to EBEO letters
 cmudict_to_ebeo = {
