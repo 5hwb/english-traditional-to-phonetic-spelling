@@ -4,5 +4,5 @@ This is a set of Python scripts that convert normal English writing into phoneti
 
 ## TODO
 
-* Create script to actually do the transliteration
+* Fix pronunciation of some words
 * Change pronunciation of words from American to Australian
