@@ -3,10 +3,12 @@ def get_word_from_dict(word, dict):
     is_capital = word[0].isupper()
     
     # Is the word in the intended dictionary?
-    if (word in dict):
-        new_word = dict[word]
+    if (word.lower() in dict):
+        new_word = dict[word.lower()]
+        
+        # Does the word start with a capital letter?
         if is_capital:
-            new_word = new_word[0].toupper() + new_word[1:]
+            new_word = new_word[0].upper() + new_word[1:]
         return new_word
 
     else:
@@ -30,7 +32,7 @@ for entry in trad_to_ebeo_str.split("\n"):
         trad_to_ebeo_dict[pair[0].lower()] = pair[1]
         ebeo_to_trad_dict[pair[1]] = pair[0].lower()
     
-input_str = "This is a test always a test"
+input_str = "This is a test always a test Here's another sentence"
 output_str = ""
 for word in input_str.split(" "):
     output_str += get_word_from_dict(word, trad_to_ebeo_dict) + " "
