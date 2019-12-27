@@ -1,5 +1,6 @@
 # This script creates a dictionary that maps traditional words to EBEO ones.
 # The output is called 'trad_to_ebeo.txt'.
+# CMUdict obtained from here: https://stackoverflow.com/questions/3794454/where-can-i-obtain-an-english-dictionary-with-structured-data
 
 # Map CMUdict notation to EBEO letters
 cmudict_to_ebeo = {
@@ -52,6 +53,10 @@ def cmudict_entry_to_word(entry):
     new_word = ""
     for phoneme in entry.split(" "):
         new_word += cmudict_to_ebeo[phoneme]
+    
+    # Fix certain sequences to correct pronunciation
+    new_word = new_word.replace("or", "ar")
+    new_word = new_word.replace("ór", "or")
     
     return new_word
 
