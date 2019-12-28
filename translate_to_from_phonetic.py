@@ -49,13 +49,16 @@ def convert_dict(dict_str):
         "to_trad": ebeo_to_trad_dict,
     }
 
+def convert_to_from_phonetic(input_str):
+    output_str = ""
+    for word in input_str.split(" "):
+        output_str += get_word_from_dict(word, dict_content["to_ebeo"]) + " "
+    return output_str
+
 
 trad_to_ebeo_str = load_dict_file("trad_to_ebeo.txt")
 dict_content = convert_dict(trad_to_ebeo_str)
-    
 input_str = "This is a test always a test Here's another sentence"
-output_str = ""
-for word in input_str.split(" "):
-    output_str += get_word_from_dict(word, dict_content["to_ebeo"]) + " "
+output_str = convert_to_from_phonetic(input_str)
 
 print(output_str)
