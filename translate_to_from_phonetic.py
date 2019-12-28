@@ -1,5 +1,8 @@
 def get_word_from_dict(word, dict):
-
+    '''
+    Receive a word string and a dict with the required mapping
+    and return its counterpart word
+    '''
     is_capital = word[0].isupper()
     
     # Is the word in the intended dictionary?
@@ -14,27 +17,45 @@ def get_word_from_dict(word, dict):
     else:
         return "<{}>".format(word)
 
-# Open the file with the traditional-to-phonetic dictionary
-with open('trad_to_ebeo.txt', "r+") as file:
-    trad_to_ebeo_str = file.read()
+def load_dict_file(filepath):
+    '''
+    Read the file with the traditional-to-phonetic dictionary and
+    return its contents as a string
+    '''
+    with open(filepath, "r+") as file:
+        trad_to_ebeo_str = file.read()
+    return trad_to_ebeo_str
+    
+def convert_dict(dict_str):
+    '''
+    Receive a dictionary file string input and put it into 2 dictionaries:
+    1 for traditional -> phonetic and another for phonetic -> traditional
+    '''
+    trad_to_ebeo_dict = {}
+    ebeo_to_trad_dict = {}
+    for entry in dict_str.split("\n"):
 
-# Put it into 2 dictionaries: 1 for traditional -> phonetic
-# and another for phonetic -> traditional
-trad_to_ebeo_dict = {}
-ebeo_to_trad_dict = {}
-for entry in trad_to_ebeo_str.split("\n"):
+        # Process the line
+        pair = entry.split(" = ")
+        # Is it a valid word-pronunciation pair?
+        if len(pair) >= 2:
+            #print("{} ==== {}".format(pair[0].lower(), pair[1]))
+            trad_to_ebeo_dict[pair[0].lower()] = pair[1]
+            ebeo_to_trad_dict[pair[1]] = pair[0].lower()
+    
+    # Return new dictionary containing both dicts
+    return {
+        "to_ebeo": trad_to_ebeo_dict,
+        "to_trad": ebeo_to_trad_dict,
+    }
 
-    # Process the line
-    pair = entry.split(" = ")
-    # Is it a valid word-pronunciation pair?
-    if len(pair) >= 2:
-        #print("{} ==== {}".format(pair[0].lower(), pair[1]))
-        trad_to_ebeo_dict[pair[0].lower()] = pair[1]
-        ebeo_to_trad_dict[pair[1]] = pair[0].lower()
+
+trad_to_ebeo_str = load_dict_file("trad_to_ebeo.txt")
+dict_content = convert_dict(trad_to_ebeo_str)
     
 input_str = "This is a test always a test Here's another sentence"
 output_str = ""
 for word in input_str.split(" "):
-    output_str += get_word_from_dict(word, trad_to_ebeo_dict) + " "
+    output_str += get_word_from_dict(word, dict_content["to_ebeo"]) + " "
 
 print(output_str)
