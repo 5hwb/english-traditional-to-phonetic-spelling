@@ -51,10 +51,11 @@ def convert_dict(dict_str):
         "to_trad": ebeo_to_trad_dict,
     }
 
-def convert_to_from_phonetic(input):
+def convert_to_from_phonetic(input, to_phonetic=True):
     regex_format = "['a-zāàéèŧēúíòōáśđŵĝĥùūóźŋâA-ZĀÀÉÈŦĒÚÍÒŌÁŚĐŴĜĤÙŪÓŹŊÂ]"
     regex_prog = re.compile(regex_format)
     output = ""
+    dict_to_call = "to_ebeo" if to_phonetic else "to_trad"
     
     word_start = -1 # Index of the 1st char in the word
     word_end = -1 # Index of the last char in the word
@@ -82,7 +83,7 @@ def convert_to_from_phonetic(input):
                 #print("start={} end={} word={}".format(word_start, word_end, word))
 
                 # Append output            
-                output += get_word_from_dict(word, dict_content["to_ebeo"])
+                output += get_word_from_dict(word, dict_content[dict_to_call])
                 
                 # Reset everything
                 word_start = -1
@@ -100,7 +101,7 @@ def convert_to_from_phonetic(input):
         #print("start={} end={} word={}".format(word_start, word_end, word))
 
         # Append output            
-        output += get_word_from_dict(word, dict_content["to_ebeo"])
+        output += get_word_from_dict(word, dict_content[dict_to_call])
 
     return output
 
@@ -108,6 +109,8 @@ def convert_to_from_phonetic(input):
 trad_to_ebeo_str = load_dict_file("trad_to_ebeo.txt")
 dict_content = convert_dict(trad_to_ebeo_str)
 input_str = "This is a test, always a test. Here's another sentence"
-output_str = convert_to_from_phonetic(input_str)
+output_str = convert_to_from_phonetic(input_str, True)
+output_str2 = convert_to_from_phonetic(output_str, False)
 
 print(output_str)
+print(output_str2)
