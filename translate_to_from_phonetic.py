@@ -1,3 +1,5 @@
+import re
+
 def get_word_from_dict(word, dict):
     '''
     Receive a word string and a dict with the required mapping
@@ -50,15 +52,62 @@ def convert_dict(dict_str):
     }
 
 def convert_to_from_phonetic(input):
+    regex_format = "['a-zāàéèŧēúíòōáśđŵĝĥùūóźŋâA-ZĀÀÉÈŦĒÚÍÒŌÁŚĐŴĜĤÙŪÓŹŊÂ]"
+    regex_prog = re.compile(regex_format)
     output = ""
-    for word in input.split(" "):
-        output += get_word_from_dict(word, dict_content["to_ebeo"]) + " "
+    
+    word_start = -1 # Index of the 1st char in the word
+    word_end = -1 # Index of the last char in the word
+    recording_word = False # True if 
+    
+    for i in range(0, len(input)):
+        char = input[i]
+        is_match = regex_prog.match(char)
+        #print("CHAR={}".format(char))
+        
+        # Is the current char a letter of a word?
+        if is_match:
+            #print("{} {} MATCH FOUN.".format(char, i))
+            if not recording_word:
+                word_start = i
+                recording_word = True
+        
+        # Otherwise, slice the word off the input using the recorded indexes 
+        else:
+            #print("{} {} END OF WORD?".format(char, i))
+            if recording_word:
+                word_end = i
+                
+                word = input[word_start:word_end]
+                #print("start={} end={} word={}".format(word_start, word_end, word))
+
+                # Append output            
+                output += get_word_from_dict(word, dict_content["to_ebeo"])
+                
+                # Reset everything
+                word_start = -1
+                word_end = -1
+                recording_word = False
+            
+            # Append the non-letter punctuation
+            output += input[i]
+
+        #print("OUTPUT: {}".format(output))
+    
+    # Handle case where the last word goes to the end of the text
+    if recording_word:
+        word = input[word_start:len(input)]
+        #print("start={} end={} word={}".format(word_start, word_end, word))
+
+        # Append output            
+        output += get_word_from_dict(word, dict_content["to_ebeo"])
+
     return output
 
 
 trad_to_ebeo_str = load_dict_file("trad_to_ebeo.txt")
 dict_content = convert_dict(trad_to_ebeo_str)
-input_str = "This is a test always a test Here's another sentence"
+input_str = "This is a test, always a test. Here's another sentence"
 output_str = convert_to_from_phonetic(input_str)
 
 print(output_str)
