@@ -1,6 +1,7 @@
 Phoneme EBEO	Example	Translation
 ------- ------- ------- -----------
-AA	o	odd	AA D
+OA	o	odd	OA D
+AA	a	far	F AA R
 AE	á	at	AE T
 AH	a	hut	HH AH T
 AO	ó	ought	AO T
