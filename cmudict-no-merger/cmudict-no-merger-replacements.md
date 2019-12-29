@@ -32,11 +32,12 @@ For example, given the input string 'TECHNO**LOGICAL  T EH2 K N AH0 L AA1** JH I
 
 Plugging it into the replacement string `$1O$2$1 OA$3`, we get 'L' + 'O' + 'GICAL  T EH2 K N AH0 ' + 'L' + ' OA' + '1', resulting in the replaced string 'TECHNO**LOGICAL  T EH2 K N AH0 L OA1** JH IH0 K AH0 L'.
 
-### Special case: the letter 'C'
+### Special cases
 
 The all-encompassing regex doesn't cover all cases though.
 
 * `(CO)(.+)K AA([012])` -> `$1$2K OA$3` - covers words where the 'k' sound is spelt as 'c'.
+* `(SO)(.+)Z AA([012])` -> `$1$2Z OA$3` - covers words where the 'z' sound is spelt as 's'. This was done manually on a case-by-case basis.
 
 ## Clean-up
 
