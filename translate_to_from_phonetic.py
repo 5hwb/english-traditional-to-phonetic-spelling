@@ -24,7 +24,7 @@ def load_dict_file(filepath):
     Read the file with the traditional-to-phonetic dictionary and
     return its contents as a string
     '''
-    with open(filepath, "r+") as file:
+    with open(filepath, "r+", encoding="utf-8") as file:
         trad_to_ebeo_str = file.read()
     return trad_to_ebeo_str
     

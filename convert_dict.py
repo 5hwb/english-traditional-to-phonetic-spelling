@@ -61,10 +61,11 @@ def cmudict_entry_to_word(entry):
     return new_word
 
 # Open the file with the dictionary
-with open('cmudict/cmudict-0.7b', "r+") as file:
+with open('cmudict/cmudict-0.7b', "r+", encoding="utf-8") as file:
     cmudict = file.read()
 
 # Go thru the file
+cmudict_converted = ""
 for line in cmudict.split("\n"):
     # Skip comments
     if (line[0:3] == ";;;"):
@@ -74,7 +75,11 @@ for line in cmudict.split("\n"):
     pair = line.split("  ")
     # Is it a valid word-pronunciation pair?
     if len(pair) >= 2:
-        print("{} = {}".format(pair[0],
-                cmudict_entry_to_word(pair[1])))
+        cmudict_converted += "{} = {}".format(pair[0],
+                cmudict_entry_to_word(pair[1])) + "\n"
     else:
-        print("{} = nothing".format(pair[0]))
+        cmudict_converted += "{} = nothing".format(pair[0]) + "\n"
+
+# Write the converted dict to file
+with open("trad_to_ebeo.txt", "w+", encoding="utf-8") as file:
+    file.write(cmudict_converted)
