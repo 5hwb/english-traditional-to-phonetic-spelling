@@ -31,3 +31,10 @@ For example, given the input string 'TECHNO**LOGICAL  T EH2 K N AH0 L AA1** JH I
 * Group 3 (`$3`) is '1'
 
 Plugging it into the replacement string `$1O$2$1 OA$3`, we get 'L' + 'O' + 'GICAL  T EH2 K N AH0 ' + 'L' + ' OA' + '1', resulting in the replaced string 'TECHNO**LOGICAL  T EH2 K N AH0 L OA1** JH IH0 K AH0 L'.
+
+## Clean-up
+
+Only issue with the previous regex was that it also replaced words that don't need to be changed. Thankfully these issues were minimal overall.
+
+* `([PBFVMTDNKGSZJRLHWY])AR(.+)\1 OA([012]) R` -> `$1AR$2$1 AA$3 R` - find words corresponding to '*ar' but were mistakenly translated as 'OA R'
+* `([PBFVMTDNKGSZJRLHWY])A(.+)\1 OA([012])` -> `$1A$2$1 AA$3` - find words corresponding to '*a' but were mistakenly translated as 'OA'. This was done manually on a case-by-case basis
