@@ -4,7 +4,8 @@
 
 # Map CMUdict notation to EBEO letters
 cmudict_to_ebeo = {
-    "AA": "o", "AA0": "e", "AA1": "o", "AA2": "o",
+    "OA": "o", "OA0": "e", "OA1": "o", "OA2": "o",
+    "AA": "a", "AA0": "e", "AA1": "a", "AA2": "a",
     "AE": "á", "AE0": "e", "AE1": "á", "AE2": "á",
     "AH": "a", "AH0": "e", "AH1": "a", "AH2": "a",
     "AO": "ó", "AO0": "ó", "AO1": "ó", "AO2": "ó",
@@ -61,7 +62,7 @@ def cmudict_entry_to_word(entry):
     return new_word
 
 # Open the file with the dictionary
-with open('cmudict/cmudict-0.7b', "r+", encoding="utf-8") as file:
+with open('cmudict-no-merger/cmudict-0.7b-no-merger', "r+", encoding="utf-8") as file:
     cmudict = file.read()
 
 # Go thru the file
