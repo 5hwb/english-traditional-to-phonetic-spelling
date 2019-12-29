@@ -1,0 +1,41 @@
+Phoneme EBEO	Example	Translation
+------- ------- ------- -----------
+AA	o	odd	AA D
+AE	á	at	AE T
+AH	a	hut	HH AH T
+AO	ó	ought	AO T
+AW	à	cow	K AW
+AY	ā	hide	HH AY D
+B	b	be	B IY
+CH	c	cheese	CH IY Z
+D	d	dee	D IY
+DH	đ	thee	DH IY
+EH	é	Ed	EH D
+ER	er	hurt	HH ER T
+EY	ē	ate	EY T
+F	f	fee	F IY
+G	g	green	G R IY N
+HH	h	he	HH IY
+IH	i	it	IH T
+IY	í	eat	IY T
+JH	j	gee	JH IY
+K	k	key	K IY
+L	l	lee	L IY
+M	m	me	M IY
+N	n	knee	N IY
+NG	ŋ	ping	P IH NG
+OW	ò	oat	OW T
+OY	ō	toy	T OY
+P	p	pee	P IY
+R	r	read	R IY D
+S	s	sea	S IY
+SH	ś	she	SH IY
+T	t	tea	T IY
+TH	ŧ	theta	TH EY T AH
+UH	u	hood	HH UH D
+UW	ú	two	T UW
+V	v	vee	V IY
+W	w	we	W IY
+Y	y	yield	Y IY L D
+Z	z	zee	Z IY
+ZH	ź	seizure	S IY ZH ER
