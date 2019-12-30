@@ -59,11 +59,12 @@ def convert_to_from_phonetic(input, to_phonetic=True):
 
     word_start = -1 # Index of the 1st char in the word
     word_end = -1 # Index of the last char in the word
-    recording_word = False # True if
+    recording_word = False # True if the current char is part of a word. Used to help extract individual words
+    has_start_quotemark = False
+    has_end_quotemark = False
 
     for i in range(0, len(input)):
-        char = input[i]
-        is_match = regex_prog.match(char)
+        is_match = regex_prog.match(input[i])
         #print("CHAR={}".format(char))
 
         # Is the current char a letter of a word?
@@ -73,22 +74,36 @@ def convert_to_from_phonetic(input, to_phonetic=True):
                 word_start = i
                 recording_word = True
 
+                # Check if word starts with quotation mark.
+                if input[word_start] == "'":
+                    has_start_quotemark = True
+                    word_start += 1
+
         # Otherwise, slice the word off the input using the recorded indexes
         else:
             #print("{} {} END OF WORD?".format(char, i))
             if recording_word:
                 word_end = i
 
+                # Check if word ends with quotation mark.
+                if input[word_end-1] == "'":
+                    has_end_quotemark = True
+                    word_end -= 1
+
                 word = input[word_start:word_end]
-                #print("start={} end={} word={}".format(word_start, word_end, word))
+                print("start={} end={} word={}".format(word_start, word_end, word))
 
                 # Append output
+                output += "'" if has_start_quotemark else ""
                 output += get_word_from_dict(word, dict_content[dict_to_call])
+                output += "'" if has_end_quotemark else ""
 
                 # Reset everything
                 word_start = -1
                 word_end = -1
                 recording_word = False
+                has_start_quotemark = False
+                has_end_quotemark = False
 
             # Append the non-letter punctuation
             output += input[i]
@@ -97,18 +112,27 @@ def convert_to_from_phonetic(input, to_phonetic=True):
 
     # Handle case where the last word goes to the end of the text
     if recording_word:
-        word = input[word_start:len(input)]
+        word_end = len(input)
+
+        # Check if word ends with quotation mark.
+        if input[word_end-1] == "'":
+            has_end_quotemark = True
+            word_end -= 1
+
+        word = input[word_start:word_end]
         #print("start={} end={} word={}".format(word_start, word_end, word))
 
         # Append output
+        output += "'" if has_start_quotemark else ""
         output += get_word_from_dict(word, dict_content[dict_to_call])
+        output += "'" if has_end_quotemark else ""
 
     return output
 
 
 trad_to_ebeo_str = load_dict_file("trad_to_ebeo.txt")
 dict_content = convert_dict(trad_to_ebeo_str)
-input_str = """This is a test, always a test. Here's another sentence"""
+input_str = """'This is a test, always a 'test'. Here's another sentence for 'tests'"""
 output_str = convert_to_from_phonetic(input_str, True)
 output_str2 = convert_to_from_phonetic(output_str, False)
 
