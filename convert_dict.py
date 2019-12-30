@@ -1,3 +1,5 @@
+import re
+
 # This script creates a dictionary that maps traditional words to EBEO ones.
 # The output is called 'trad_to_ebeo.txt'.
 # CMUdict obtained from here: https://stackoverflow.com/questions/3794454/where-can-i-obtain-an-english-dictionary-with-structured-data
@@ -97,9 +99,18 @@ def convert_dict(dict):
 
     return dict_converted
 
+def clean_up_pronunciations(dict):
+    '''
+    Change the pronunciations to fit the EBEO orthographical conventions.
+    '''
+    #dict = dict.replace("o", "qqZZqq")
+    dict = re.sub(r"S = (.+)z\n", r"S = \1s\n", dict) # Replace phonetic -z (plural or case suffix at the end of word) with -s
+    return dict
+
 # Open the file with the dictionary
 cmudict = load_dict_file("cmudict-no-merger/cmudict-0.7b-no-merger")
 # Go thru the file
 cmudict_converted = convert_dict(cmudict)
+cmudict_converted = clean_up_pronunciations(cmudict_converted)
 # Write the converted dict to file
 save_dict_file("trad_to_ebeo.txt", cmudict_converted)
