@@ -51,11 +51,14 @@ def convert_dict(dict_str):
         "to_trad": ebeo_to_trad_dict,
     }
 
-def convert_to_from_phonetic(input, to_phonetic=True):
+def convert_to_from_phonetic(input, dict_mapping):
+    '''
+    Translate a string of text in 1 orthography into the other one.
+    dict_mapping is a dictionary that contains the appropriate mappings. 
+    '''
     regex_format = "['a-zāàéèŧēúíòōáśđŵĝĥùūóźŋâA-ZĀÀÉÈŦĒÚÍÒŌÁŚĐŴĜĤÙŪÓŹŊÂ]"
     regex_prog = re.compile(regex_format)
     output = ""
-    dict_to_call = "to_ebeo" if to_phonetic else "to_trad"
 
     word_start = -1 # Index of the 1st char in the word
     word_end = -1 # Index of the last char in the word
@@ -95,7 +98,7 @@ def convert_to_from_phonetic(input, to_phonetic=True):
 
                 # Append output
                 output += "'" if has_start_quotemark else ""
-                output += get_word_from_dict(word, dict_content[dict_to_call])
+                output += get_word_from_dict(word, dict_mapping)
                 output += "'" if has_end_quotemark else ""
 
                 # Reset everything
@@ -124,7 +127,7 @@ def convert_to_from_phonetic(input, to_phonetic=True):
 
         # Append output
         output += "'" if has_start_quotemark else ""
-        output += get_word_from_dict(word, dict_content[dict_to_call])
+        output += get_word_from_dict(word, dict_mapping)
         output += "'" if has_end_quotemark else ""
 
     return output
@@ -133,8 +136,8 @@ def convert_to_from_phonetic(input, to_phonetic=True):
 trad_to_ebeo_str = load_dict_file("trad_to_ebeo.txt")
 dict_content = convert_dict(trad_to_ebeo_str)
 input_str = """'This is a test, always a 'test'. Here's another sentence for 'tests'"""
-output_str = convert_to_from_phonetic(input_str, True)
-output_str2 = convert_to_from_phonetic(output_str, False)
+output_str = convert_to_from_phonetic(input_str, dict_content["to_ebeo"])
+output_str2 = convert_to_from_phonetic(output_str, dict_content["to_trad"])
 
 print(output_str)
 print(output_str2)
