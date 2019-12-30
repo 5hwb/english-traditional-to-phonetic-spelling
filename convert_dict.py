@@ -56,7 +56,6 @@ def cmudict_entry_to_word(entry):
         new_word += cmudict_to_ebeo[phoneme]
 
     # Fix certain sequences to correct pronunciation
-    new_word = new_word.replace("or", "ar")
     new_word = new_word.replace("ór", "or")
 
     return new_word
