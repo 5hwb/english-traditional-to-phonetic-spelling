@@ -105,6 +105,7 @@ def clean_up_pronunciations(dict):
     '''
     #dict = dict.replace("o", "qqZZqq")
     dict = re.sub(r"S = (.+)z\n", r"S = \1s\n", dict) # Replace phonetic -z (plural or case suffix at the end of word) with -s
+    dict = re.sub(r"ES = (.+)is\n", r"ES = \1es\n", dict) # Replace phonetic -z (plural or case suffix at the end of word) with -s
     return dict
 
 # Open the file with the dictionary
