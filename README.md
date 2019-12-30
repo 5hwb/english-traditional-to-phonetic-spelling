@@ -5,4 +5,4 @@ This is a set of Python scripts that convert normal English writing into phoneti
 ## TODO
 
 * Fix pronunciation of some words
-* Change pronunciation of words from American to Australian
+* Idea: create a 'personalised dict' that only contains the words of the input string to be translated. This could reduce the chance of uncommon words reducing the quality of translation
