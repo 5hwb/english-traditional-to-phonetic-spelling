@@ -60,26 +60,46 @@ def cmudict_entry_to_word(entry):
 
     return new_word
 
+def load_dict_file(filepath):
+    '''
+    Read the dictionary file and return its contents as a string
+    '''
+    with open(filepath, "r+", encoding="utf-8") as file:
+        trad_to_ebeo_str = file.read()
+    return trad_to_ebeo_str
+
+def save_dict_file(filepath, dict):
+    '''
+    Write the dictionary contents to a file
+    '''
+    with open(filepath, "w+", encoding="utf-8") as file:
+        file.write(dict)
+
+def convert_dict(dict):
+    '''
+    Convert the CMUdict dictionary into a mapping
+    from traditional English spelling to phonetic spelling
+    '''
+    dict_converted = ""
+    for line in dict.split("\n"):
+        # Skip comments
+        if (line[0:3] == ";;;"):
+            continue
+
+        # Process the line
+        pair = line.split("  ")
+        # Is it a valid word-pronunciation pair?
+        if len(pair) >= 2:
+            dict_converted += "{} = {}".format(pair[0],
+                    cmudict_entry_to_word(pair[1])) + "\n"
+        else:
+            dict_converted += "{} = nothing".format(pair[0]) + "\n"
+
+    return dict_converted
+
 # Open the file with the dictionary
-with open('cmudict-no-merger/cmudict-0.7b-no-merger', "r+", encoding="utf-8") as file:
-    cmudict = file.read()
-
+cmudict = load_dict_file("cmudict-no-merger/cmudict-0.7b-no-merger")
 # Go thru the file
-cmudict_converted = ""
-for line in cmudict.split("\n"):
-    # Skip comments
-    if (line[0:3] == ";;;"):
-        continue
-
-    # Process the line
-    pair = line.split("  ")
-    # Is it a valid word-pronunciation pair?
-    if len(pair) >= 2:
-        cmudict_converted += "{} = {}".format(pair[0],
-                cmudict_entry_to_word(pair[1])) + "\n"
-    else:
-        cmudict_converted += "{} = nothing".format(pair[0]) + "\n"
-
+cmudict_converted = convert_dict(cmudict)
 # Write the converted dict to file
-with open("trad_to_ebeo.txt", "w+", encoding="utf-8") as file:
-    file.write(cmudict_converted)
+save_dict_file("trad_to_ebeo.txt", cmudict_converted)
