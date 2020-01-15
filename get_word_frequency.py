@@ -1,4 +1,13 @@
 import re
+from operator import itemgetter
+
+def load_file(filepath):
+    '''
+    Read the file and return its contents as a string
+    '''
+    with open(filepath, "r+", encoding="utf-8") as file:
+        file_str = file.read()
+    return file_str
 
 def get_word_frequency(input):
     '''
@@ -49,6 +58,10 @@ def get_word_frequency(input):
         
     return words
 
-input_str = "This is a test, always a test. Here's another sentence"
-set_of_words = get_word_frequency(input_str)
-print(set_of_words)
+#input_str = "This is a test, always a test. Here's another sentence"
+input_str = load_file("input.txt")
+set_of_words = get_word_frequency(input_str).items() # ('the', 4020), etc
+set_of_words = sorted(set_of_words, key=itemgetter(0)) # Sort by word
+set_of_words = sorted(set_of_words, key=itemgetter(1), reverse=True) # Sort by frequency, backwards
+for tup in set_of_words:
+    print("{} ({} counts)".format(tup[0], tup[1]))
