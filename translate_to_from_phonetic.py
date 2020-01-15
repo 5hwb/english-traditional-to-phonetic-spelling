@@ -94,7 +94,7 @@ def convert_to_from_phonetic(input, dict_mapping):
                     word_end -= 1
 
                 word = input[word_start:word_end]
-                print("start={} end={} word={}".format(word_start, word_end, word))
+                #print("start={} end={} word={}".format(word_start, word_end, word))
 
                 # Append output
                 output += "'" if has_start_quotemark else ""
