@@ -104,8 +104,23 @@ def clean_up_pronunciations(dict):
     Change the pronunciations to fit the EBEO orthographical conventions.
     '''
     #dict = dict.replace("o", "qqZZqq")
-    dict = re.sub(r"S = (.+)z\n", r"S = \1s\n", dict) # Replace phonetic -z (plural or case suffix at the end of word) with -s
-    dict = re.sub(r"ES = (.+)is\n", r"ES = \1es\n", dict) # Replace phonetic -z (plural or case suffix at the end of word) with -s
+    # Replace phonetic -z (plural or case suffix at the end of most words) with -s
+    dict = re.sub(r"S = (.+)z\n", r"S = \1s\n", dict)
+    # Replace phonetic -is (plural or case suffix at the end of some words) with -es
+    dict = re.sub(r"ES = (.+)is\n", r"ES = \1es\n", dict)
+    # Replace phonetic -id  with -ed
+    dict = re.sub(r"(?<!I)ED = (.+)id\n", r"ED = \1ed\n", dict)
+    
+    # Remove alternate pronunciations (e.g. SCIENCE(1) = ..)
+    dict = re.sub(r"(.+\(1\) = .+)\n", r"", dict)
+    dict = re.sub(r"(.+\(2\) = .+)\n", r"", dict)
+    dict = re.sub(r"(.+\(3\) = .+)\n", r"", dict)
+    
+    # Remove entries with final apostrophe (e.g. CARS' = ..) and their alt pronuncications
+    dict = re.sub(r"(.+' = .+)\n", r"", dict)
+    dict = re.sub(r"(.+'\(1\) = .+)\n", r"", dict)
+    dict = re.sub(r"(.+'\(2\) = .+)\n", r"", dict)
+    dict = re.sub(r"(.+'\(3\) = .+)\n", r"", dict)
     return dict
 
 # Open the file with the dictionary
