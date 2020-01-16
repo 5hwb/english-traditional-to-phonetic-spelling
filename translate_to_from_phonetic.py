@@ -1,4 +1,5 @@
 import re
+from file_io import load_file_to_str
 
 def get_word_from_dict(word, dict):
     '''
@@ -18,15 +19,6 @@ def get_word_from_dict(word, dict):
 
     else:
         return "<{}>".format(word)
-
-def load_dict_file(filepath):
-    '''
-    Read the file with the traditional-to-phonetic dictionary and
-    return its contents as a string
-    '''
-    with open(filepath, "r+", encoding="utf-8") as file:
-        trad_to_ebeo_str = file.read()
-    return trad_to_ebeo_str
 
 def convert_dict(dict_str):
     '''
@@ -133,7 +125,7 @@ def convert_to_from_phonetic(input, dict_mapping):
     return output
 
 
-trad_to_ebeo_str = load_dict_file("trad_to_ebeo.txt")
+trad_to_ebeo_str = load_file_to_str("trad_to_ebeo.txt")
 dict_content = convert_dict(trad_to_ebeo_str)
 input_str = """'This is a test, always a 'test'. Here's another sentence for 'tests'"""
 output_str = convert_to_from_phonetic(input_str, dict_content["to_ebeo"])

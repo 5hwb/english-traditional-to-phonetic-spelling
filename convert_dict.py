@@ -1,4 +1,5 @@
 import re
+from file_io import load_file_to_str, save_str_to_file
 
 # This script creates a dictionary that maps traditional words to EBEO ones.
 # The output is called 'trad_to_ebeo.txt'.
@@ -62,21 +63,6 @@ def cmudict_entry_to_word(entry):
 
     return new_word
 
-def load_dict_file(filepath):
-    '''
-    Read the dictionary file and return its contents as a string
-    '''
-    with open(filepath, "r+", encoding="utf-8") as file:
-        trad_to_ebeo_str = file.read()
-    return trad_to_ebeo_str
-
-def save_dict_file(filepath, dict):
-    '''
-    Write the dictionary contents to a file
-    '''
-    with open(filepath, "w+", encoding="utf-8") as file:
-        file.write(dict)
-
 def convert_dict(dict):
     '''
     Convert the CMUdict dictionary into a mapping
@@ -124,9 +110,9 @@ def clean_up_pronunciations(dict):
     return dict
 
 # Open the file with the dictionary
-cmudict = load_dict_file("cmudict-no-merger/cmudict-0.7b-no-merger")
+cmudict = load_file_to_str("cmudict-no-merger/cmudict-0.7b-no-merger")
 # Go thru the file
 cmudict_converted = convert_dict(cmudict)
 cmudict_converted = clean_up_pronunciations(cmudict_converted)
 # Write the converted dict to file
-save_dict_file("trad_to_ebeo.txt", cmudict_converted)
+save_str_to_file("trad_to_ebeo.txt", cmudict_converted)
