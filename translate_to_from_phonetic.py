@@ -43,6 +43,12 @@ def convert_dict(dict_str):
         "to_trad": ebeo_to_trad_dict,
     }
 
+def load_dict(filepath):
+    '''
+    Load the dict from file and return a Python dict with its contents. 
+    '''
+    return convert_dict(load_file_to_str(filepath))
+
 def convert_to_from_phonetic(input, dict_mapping):
     '''
     Translate a string of text in 1 orthography into the other one.
@@ -124,9 +130,7 @@ def convert_to_from_phonetic(input, dict_mapping):
 
     return output
 
-
-trad_to_ebeo_str = load_file_to_str("trad_to_ebeo.txt")
-dict_content = convert_dict(trad_to_ebeo_str)
+dict_content = load_dict("trad_to_ebeo.txt")
 input_str = """'This is a test, always a 'test'. Here's another sentence for 'tests'"""
 output_str = convert_to_from_phonetic(input_str, dict_content["to_ebeo"])
 output_str2 = convert_to_from_phonetic(output_str, dict_content["to_trad"])
