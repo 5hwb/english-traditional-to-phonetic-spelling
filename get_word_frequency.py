@@ -1,7 +1,7 @@
 import re
 from operator import itemgetter
-from translate_to_from_phonetic import convert_to_from_phonetic
-from file_io import load_file_to_str
+from translate_to_from_phonetic import get_word_from_dict, load_dict
+from file_io import load_file_to_str, save_str_to_file
 
 def get_word_frequency(input):
     '''
@@ -57,5 +57,9 @@ input_str = load_file_to_str("input.txt")
 set_of_words = get_word_frequency(input_str).items() # ('the', 4020), etc
 set_of_words = sorted(set_of_words, key=itemgetter(0)) # Sort by word
 set_of_words = sorted(set_of_words, key=itemgetter(1), reverse=True) # Sort by frequency, backwards
+dict_content = load_dict("trad_to_ebeo.txt")
+output = ""
 for tup in set_of_words:
-    print("{} ({} counts). EBEO: {}".format(tup[0], tup[1], '''convert_to_from_phonetic(tup[0], )'''))
+    output += "{} ({} counts). EBEO: {}\n".format(tup[0], tup[1], get_word_from_dict(tup[0], dict_content["to_ebeo"]))
+
+save_str_to_file("frequency-out.txt", output)
