@@ -1,11 +1,15 @@
 import re
-from file_io import load_file_to_str
+from file_io import load_file_to_str, save_str_to_file
 
 def get_word_from_dict(word, dict):
     '''
     Receive a word string and a dict with the required mapping
     and return its counterpart word
     '''
+    # Do not process a 0-char word
+    #print("WORD={}".format(word))
+    if len(word) == 0:
+        return ""
     is_capital = word[0].isupper()
 
     # Is the word in the intended dictionary?
@@ -66,7 +70,7 @@ def convert_to_from_phonetic(input, dict_mapping):
 
     for i in range(0, len(input)):
         is_match = regex_prog.match(input[i])
-        #print("CHAR={}".format(char))
+        #print("CHAR={}".format(input[i]))
 
         # Is the current char a letter of a word?
         if is_match:
@@ -137,3 +141,7 @@ output_str2 = convert_to_from_phonetic(output_str, dict_content["to_trad"])
 
 print(output_str)
 print(output_str2)
+
+ebeo_input = load_file_to_str("ebeo-input.txt")
+ebeo_out = convert_to_from_phonetic(ebeo_input, dict_content["to_trad"])
+save_str_to_file("ebeo_input_converted-out.txt", ebeo_out)
