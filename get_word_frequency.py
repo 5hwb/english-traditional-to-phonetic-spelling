@@ -62,4 +62,4 @@ output = ""
 for tup in set_of_words:
     output += "{} ({} counts). EBEO: {}\n".format(tup[0], tup[1], get_word_from_dict(tup[0], dict_content["to_ebeo"]))
 
-save_str_to_file("frequency-out.txt", output)
+save_str_to_file("frequency-geo-out.txt", output)

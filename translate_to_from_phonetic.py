@@ -134,14 +134,41 @@ def convert_to_from_phonetic(input, dict_mapping):
 
     return output
 
-dict_content = load_dict("trad_to_ebeo.txt")
-input_str = """'This is a test, always a 'test'. Here's another sentence for 'tests'"""
-output_str = convert_to_from_phonetic(input_str, dict_content["to_ebeo"])
-output_str2 = convert_to_from_phonetic(output_str, dict_content["to_trad"])
+def test_phontotrad_old():
+    # Convert a text written in EBEO into traditional orthography
+    dict_content = load_dict("trad_to_ebeo.txt")
+    input_str = """'This is a test, always a 'test'. Here's another sentence for 'tests'"""
+    output_str = convert_to_from_phonetic(input_str, dict_content["to_ebeo"])
+    output_str2 = convert_to_from_phonetic(output_str, dict_content["to_trad"])
 
-print(output_str)
-print(output_str2)
+    print(output_str)
+    print(output_str2)
 
-ebeo_input = load_file_to_str("ebeo-input.txt")
-ebeo_out = convert_to_from_phonetic(ebeo_input, dict_content["to_trad"])
-save_str_to_file("ebeo_input_converted-out.txt", ebeo_out)
+    ebeo_input = load_file_to_str("ebeo-input.txt")
+    ebeo_out = convert_to_from_phonetic(ebeo_input, dict_content["to_trad"])
+    save_str_to_file("ebeo_input_converted-out.txt", ebeo_out)
+
+def test_tradtophon():
+    # Convert a text written in traditional orthography into GEO
+    dict_content = load_dict("map_trad_to_geo_basedonfreq.txt")
+    input_str = """'This is a test, always a 'test'. Here's another sentence for 'tests'"""
+    output_str = convert_to_from_phonetic(input_str, dict_content["to_ebeo"])
+    output_str2 = convert_to_from_phonetic(output_str, dict_content["to_trad"])
+
+    print(output_str)
+    print(output_str2)
+
+    trad_input = load_file_to_str("2input.txt")
+    phon_out = convert_to_from_phonetic(trad_input, dict_content["to_ebeo"])
+    save_str_to_file("trad_input_converted-new2out.txt", phon_out)
+
+def test_phontotrad():
+    # Convert a text written in BEO into traditional orthography
+    dict_content = load_dict("map_trad_to_geo_basedonfreq.txt")
+
+    phon_input = load_file_to_str("beo-input.txt")
+    trad_out = convert_to_from_phonetic(phon_input, dict_content["to_trad"])
+    save_str_to_file("beo_input_converted-out.txt", trad_out)
+
+test_tradtophon()
+#test_phontotrad()
