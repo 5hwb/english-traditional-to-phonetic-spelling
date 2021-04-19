@@ -14,14 +14,14 @@ Note: file names are slightly messy, need to organise them better
 ### Modify base mapping to create final mapping
 
 1. Examine `frequency-geo-out.txt` and modify each element to better fit the nuances of your accent. 
-2. Once done, open a text editor with regular expression capabilities and copy the contents of `frequency-geo-out.txt` to a new file called `map_trad_to_geo_basedonfreq.txt`.
+2. Once done, open a text editor with regular expression capabilities and copy the contents of `frequency-geo-out.txt` to a new file called `map_trad_to_geo.txt`.
 3. Open the find/replace field and replace `(.+) \(.+\)\. GEO: (.+)` with `\1 = \2`
-4. Add more entries as needed, e.g. 'jump = jámp'. For words with more than 1 pronunciation, wrap them in brackets: 'the = [dhu, dhi]'.
+4. Add more entries as needed, e.g. 'jump = jámp'. For words with more than 1 pronunciation, wrap them in square brackets: 'the = [dhu, dhi]'.
 
 ### Transliterate between traditional and phonetic spellings
 
 1. Create a file called `2input.txt` and paste the input to transliterate there.
-2. Run `translate_to_from_phonetic.py` = this loads the traditional-to-phonetic mapping in `map_trad_to_geo_basedonfreq.txt` and replaces each found word in `2input.txt` with their corresponding phonetic equivalents, writing the output to `trad_input_converted-2out.txt`.
+2. Run `translate_to_from_phonetic.py` = this loads the traditional-to-phonetic mapping in `map_trad_to_geo.txt` and replaces each found word in `2input.txt` with their corresponding phonetic equivalents, writing the output to `trad_input_converted-2out.txt`.
 
 ## TODO
 
